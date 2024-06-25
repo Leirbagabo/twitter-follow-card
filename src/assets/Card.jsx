@@ -1,4 +1,16 @@
-export function Card({ formatUsername,userName, name, isFollowing }) {
+import { useState } from 'react';
+
+export function Card({ userName, name }) {
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const handleClick = () => {
+    setIsFollowing(!isFollowing);
+  };
+
+  const text = isFollowing ? "Siguiendo" : "Seguir";
+  const buttonClassName = isFollowing
+    ? "tw-followCard-button is--following"
+    : "tw-followCard-button";
   return (
     <article className="tw-followCard">
       <header className="tw-followCard-header">
@@ -9,11 +21,13 @@ export function Card({ formatUsername,userName, name, isFollowing }) {
         />
         <div className="tw-followCard-info">
           <strong>{name}</strong>
-          <span className="tw-followCard-infoUserName">{formatUsername(userName)}</span>
+          <span className="tw-followCard-infoUserName">@{userName}</span>
         </div>
       </header>
       <aside>
-        <button className="tw-followCard-button ">seguir</button>
+        <button className={buttonClassName} onClick={handleClick}>
+          {text}
+        </button>
       </aside>
     </article>
   );
